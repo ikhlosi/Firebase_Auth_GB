@@ -1,10 +1,31 @@
 import { StatusBar, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import { Button, Input } from "@rneui/themed";
 
 const LoginScreen = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
+
+      <Input
+        placeholder="Email address"
+        value={email}
+        onChangeText={(text) => setEmail(text)}
+      />
+
+      <Input
+        placeholder="Password"
+        value={password}
+        onChangeText={(text) => setPassword(text)}
+      />
+
+      <View style={styles.buttonView}>
+        <Button titleStyle={{ fontSize: 14 }} title="Register" type="Clear" />
+      </View>
+      <Button title="Login" />
     </View>
   );
 };
@@ -21,5 +42,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontWeight: "600",
     paddingBottom: 24,
+  },
+  buttonView: {
+    alignItems: "flex-end",
   },
 });

@@ -2,12 +2,24 @@ import { StatusBar, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Button, Input } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigation = useNavigation();
+
+  const handleLogin = () => {
+    if (email != "" && password != "") {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredentials) => {
+          console.log(userCredentials);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -21,6 +33,7 @@ const LoginScreen = () => {
 
       <Input
         placeholder="Password"
+        secureTextEntry
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
@@ -33,7 +46,7 @@ const LoginScreen = () => {
           onPress={() => navigation.navigate("Register")}
         />
       </View>
-      <Button title="Login" />
+      <Button title="Login" onPress={() => handleLogin()} />
     </View>
   );
 };

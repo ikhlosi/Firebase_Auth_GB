@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { createContext } from "react";
+import React, { createContext, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
 
 const AuthUserStateContext = createContext({
   initializing: false,
@@ -10,10 +12,24 @@ const AuthUserProvider = ({ children }) => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState(null);
 
+  const onAuthStateChangedCallback = (newUser) => {
+    setUser(newUser);
+    if (initializing) {
+      setInitializing(false);
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, onAuthStateChangedCallback);
+    return unsubscribe;
+  }, []);
+
   return (
-    <View>
-      <Text>AuthUserProvider</Text>
-    </View>
+    <AuthUserStateContext.Provider
+      value={{ initializing: initializing, user: user }}
+    >
+      {children}
+    </AuthUserStateContext.Provider>
   );
 };
 

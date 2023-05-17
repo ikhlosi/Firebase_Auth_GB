@@ -13,6 +13,7 @@ const AuthUserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const onAuthStateChangedCallback = (newUser) => {
+    console.log("AuthStateChanged!");
     setUser(newUser);
     if (initializing) {
       setInitializing(false);

@@ -1,10 +1,13 @@
 import { StatusBar, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Button, Input } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -23,7 +26,12 @@ const LoginScreen = () => {
       />
 
       <View style={styles.buttonView}>
-        <Button titleStyle={{ fontSize: 14 }} title="Register" type="Clear" />
+        <Button
+          titleStyle={{ fontSize: 14 }}
+          title="Register"
+          type="Clear"
+          onPress={() => navigation.navigate("Register")}
+        />
       </View>
       <Button title="Login" />
     </View>

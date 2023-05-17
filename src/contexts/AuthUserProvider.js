@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -34,5 +34,7 @@ const AuthUserProvider = ({ children }) => {
 };
 
 export default AuthUserProvider;
+
+export const useAuthStateContext = () => useContext(AuthUserStateContext);
 
 const styles = StyleSheet.create({});
